@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Friends-only trust model: anyone with the link may read and write,
+    // but only well-formed documents of the two kinds the page creates.
+    match /profiles/{id} {
+      allow read: if true;
+      allow create, update: if validProfile(request.resource.data);
+      allow delete: if false;
+    }
+    match /entries/{id} {
+      allow read: if true;
+      allow create: if validEntry(request.resource.data);
+      allow delete: if true;
+      allow update: if false;
+    }
+    match /{other=**} { allow read, write: if false; }
+
+    function validProfile(d) {
+      return d.keys().hasOnly(['name', 'motto', 'portrait', 'image', 'createdAt'])
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 40
+        && d.motto is string && d.motto.size() <= 80
+        && (d.portrait == null || (d.portrait is int && d.portrait >= 0 && d.portrait <= 8))
+        && (d.image == null || (d.image is string && d.image.size() <= 250000 && d.image.matches('data:image/jpeg;base64,.*')))
+        && (!('createdAt' in d) || d.createdAt is number);
+    }
+    function validEntry(d) {
+      return d.keys().hasOnly(['profileId', 'place', 'ts'])
+        && d.profileId is string && exists(/databases/$(database)/documents/profiles/$(d.profileId))
+        && d.place in ['chipotle', 'noodlelab', 'cava', 'naya', 'lifealive', 'sweetgreen', 'dig', 'easternedge']
+        && d.ts is number && d.ts > 1600000000000 && d.ts < request.time.toMillis() + 86400000;
+    }
+  }
+}

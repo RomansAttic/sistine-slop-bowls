@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistine Slop Bowls</title>
+<meta name="description" content="A devotional ledger of every fast-casual bowl we have consumed, circa 1503.">
+<meta property="og:title" content="Sistine Slop Bowls">
+<meta property="og:description" content="Which slop bowl has each of us had the most? Oil on panel, fingers approximate.">
+<meta property="og:image" content="hero.jpg">
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700&family=Cormorant+SC:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<style>
+  /* One visual world on purpose: a badly restored, varnished panel painting. Single theme. */
+  :root {
+    --umber: #1d130b;
+    --varnish: #33210f;
+    --panel: #2a1b0e;
+    --parchment: #ead9b0;
+    --parchment-dim: #cdb98a;
+    --ink: #2a1a0c;
+    --gold: #d2a63c;
+    --gold-hi: #f3d77a;
+    --lapis: #2c4699;
+    --vermilion: #b8392b;
+    --line: rgba(210, 166, 60, .35);
+    --display: "Cinzel Decorative", "Trajan Pro", Georgia, serif;   /* the title only */
+    --numeral: "Cinzel", "Trajan Pro", Georgia, serif;                /* counts, big figures */
+    --body: "EB Garamond", "Garamond", "Iowan Old Style", Georgia, serif;
+    --caps: "Cormorant SC", "EB Garamond", Georgia, serif;             /* headings and labels */
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    background: var(--umber);
+    /* gilded acanthus leafing, dimmed under a varnish so the ledger stays legible */
+    background-image:
+      linear-gradient(rgba(29,19,11,.70), rgba(29,19,11,.82)),
+      url("leafing.jpg");
+    background-size: cover, cover; background-position: center, center; background-attachment: fixed, fixed;
+    color: var(--parchment);
+    font-family: var(--body);
+    font-size: 19px;
+    line-height: 1.45;
+    padding-inline: 16px;
+    padding-block: 20px 56px;
+  }
+  .wrap { max-width: 1040px; margin-inline: auto; display: flex; flex-direction: column; gap: 28px; }
+  button, input, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; border: 10px solid #5a3d14; border-image: linear-gradient(135deg, #f3d77a, #8a6420 30%, #e7c35b 55%, #6e4d15 80%, #f3d77a) 1;
+    box-shadow: 0 0 0 2px #140c05, 0 18px 40px rgba(0,0,0,.6);
+    aspect-ratio: 16 / 7; max-width: 100%; min-height: 230px;
+    background: #3b2a16 url("hero.jpg") center 30% / cover no-repeat;
+    display: flex; align-items: flex-end; overflow: hidden;
+  }
+  .hero::before { /* the watermark the forger forgot to remove */
+    content: "STOCKK IMAGEE · PREVEIW · STOCKK IMAGEE · PREVEIW"; position: absolute; inset: 40% -20% auto -20%;
+    transform: rotate(-14deg); text-align: center; font-family: var(--caps); letter-spacing: .4em; font-size: clamp(12px, 2.4vw, 22px);
+    color: rgba(255,255,255,.16); pointer-events: none; white-space: nowrap;
+  }
+  .plaque {
+    position: relative; width: 100%; padding: 28px 20px 16px;
+    background: linear-gradient(to top, rgba(20,12,5,.94) 30%, rgba(20,12,5,0));
+  }
+  h1 {
+    font-family: var(--display); font-weight: 900; font-size: clamp(28px, 6vw, 58px); line-height: 1; margin: 0;
+    color: var(--gold-hi); text-shadow: 0 2px 0 #4a3210, 3px 0 0 rgba(184,57,43,.55), -3px 0 0 rgba(44,70,153,.55);
+    text-wrap: balance;
+  }
+  .plaque p { margin: 8px 0 0; font-style: italic; color: var(--parchment-dim); max-width: 60ch; }
+
+  /* ---------- section chrome ---------- */
+  section { display: flex; flex-direction: column; gap: 14px; padding: 18px 20px 22px; background: rgba(29,19,11,.72); border: 1px solid rgba(210,166,60,.22); box-shadow: 0 0 0 4px rgba(29,19,11,.5); }
+  @media (max-width: 560px) { section { padding: 14px 12px 18px; } }
+  h2 {
+    font-family: var(--caps); font-weight: 700; font-size: 28px; letter-spacing: .06em; margin: 0; color: var(--gold-hi);
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; text-wrap: balance;
+  }
+  h2 small { font-family: var(--body); font-style: italic; font-size: 15px; letter-spacing: 0; color: var(--parchment-dim); }
+  .rule { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .note { font-style: italic; color: var(--parchment-dim); margin: 0; }
+  .banner { border: 1px dashed var(--line); background: rgba(29,19,11,.8); padding: 10px 14px; font-style: italic; color: var(--parchment-dim); }
+
+  /* ---------- who are you ---------- */
+  .whoami { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); border-radius: 999px; color: var(--parchment);
+  }
+  .chip[aria-pressed="true"] { background: var(--parchment); color: var(--ink); border-color: var(--gold-hi); }
+  .chip.new { padding: 8px 14px; border-style: dashed; color: var(--gold-hi); }
+  .face { /* one cell of the 3x3 portrait sheet */
+    display: block; width: 34px; height: 34px; border-radius: 50%; flex: none;
+    background: #6b4a22 url("portraits.jpg") 0 0 / 300% 300% no-repeat; border: 2px solid var(--gold);
+  }
+
+  /* ---------- log an offering ---------- */
+  .logbar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+  .logbar label { font-family: var(--caps); letter-spacing: .05em; color: var(--parchment-dim); }
+  input[type="date"], input[type="text"] {
+    background: #140c05; border: 1px solid var(--line); padding: 7px 10px; color: var(--parchment); border-radius: 2px; color-scheme: dark;
+  }
+  .bowls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .bowls { grid-template-columns: repeat(2, 1fr); } }
+  .bowl {
+    position: relative; display: flex; flex-direction: column; text-align: left; cursor: pointer; padding: 0; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); border-bottom: 5px solid var(--pig); color: var(--parchment);
+    transition: transform .12s ease;
+  }
+  .bowl:hover { transform: translateY(-2px) rotate(-.4deg); }
+  .bowl:active { transform: scale(.97) rotate(.8deg); }
+  .bowl[disabled] { opacity: .85; cursor: not-allowed; }
+  .bowl .still { aspect-ratio: 1; background: var(--pig) url("bowls.jpg") 0 0 / 400% auto no-repeat; }
+  .bowl .meta { padding: 8px 10px 9px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .bowl .nm { font-family: var(--caps); font-weight: 700; font-size: 20px; line-height: 1.1; }
+  .bowl .lat { display: block; font-style: italic; font-size: 13px; color: var(--parchment-dim); }
+  .bowl .ct { font-family: var(--numeral); font-size: 20px; color: var(--gold-hi); font-variant-numeric: tabular-nums; }
+
+  /* ---------- the fresco ---------- */
+  .fresco-frame {
+    border: 12px solid #5a3d14; border-image: linear-gradient(45deg, #6e4d15, #f3d77a 25%, #8a6420 50%, #f3d77a 75%, #6e4d15) 1;
+    box-shadow: 0 0 0 2px #140c05, inset 0 0 0 2px #140c05;
+  }
+  .fresco {
+    position: relative; overflow-x: auto; overflow-y: hidden;
+    background:
+      radial-gradient(40% 30% at 22% 18%, rgba(255,246,214,.55), transparent 70%),
+      radial-gradient(35% 25% at 75% 30%, rgba(255,240,200,.35), transparent 70%),
+      linear-gradient(to bottom, #6f8fc2 0%, #a9bfd6 38%, #e6d2a2 70%, #b98a4a 100%);
+  }
+  .fresco::after { /* craquelure */
+    content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .22;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.09' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .25  0 0 0 0 .16  0 0 0 0 .06  0 0 0 -9 4.6'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  }
+  .pillars { display: flex; align-items: flex-end; justify-content: space-around; gap: 18px; min-height: 440px; padding: 70px 22px 0; min-width: min-content; }
+  .pillar { display: flex; flex-direction: column; align-items: center; flex: 1 0 96px; max-width: 170px; position: relative; z-index: 1; }
+  .saint { position: relative; display: grid; place-items: center; margin-bottom: -8px; z-index: 2; animation: bob 3.2s ease-in-out infinite alternate; }
+  .saint .halo {
+    position: absolute; inset: -16%; border-radius: 50%;
+    background: radial-gradient(circle, transparent 52%, var(--gold-hi) 54%, var(--gold) 62%, transparent 64%);
+    transform: translate(9%, -12%); /* the halo is, of course, misaligned */
+  }
+  .saint.first .halo {
+    inset: -42%; transform: none; animation: spin 9s linear infinite;
+    background: repeating-conic-gradient(var(--gold-hi) 0 6deg, transparent 6deg 15deg);
+    -webkit-mask: radial-gradient(circle, transparent 38%, #000 40%, #000 66%, transparent 70%); mask: radial-gradient(circle, transparent 38%, #000 40%, #000 66%, transparent 70%);
+  }
+  .saint .face { position: relative; width: var(--sz); height: var(--sz); border-width: 3px; box-shadow: 0 6px 14px rgba(0,0,0,.45); overflow: hidden; }
+  .saint .face i { /* AI error: a strip of the face rendered twice, slightly to the side */
+    position: absolute; left: 0; right: 0; top: 34%; height: 17%; background: inherit; transform: translateX(13%) scaleX(1.06); filter: hue-rotate(-8deg);
+  }
+  .saint.last { animation: fall 2.6s ease-in-out infinite alternate; }
+  .tag {
+    position: absolute; top: -34px; white-space: nowrap; font-family: var(--caps); font-weight: 700; font-size: 14px; letter-spacing: .12em; padding: 2px 10px;
+    background: var(--vermilion); color: #fff3d6; transform: rotate(-5deg); box-shadow: 0 2px 0 rgba(0,0,0,.4);
+  }
+  .saint.first .tag { background: var(--lapis); transform: rotate(4deg); top: -48px; }
+  .stack { display: flex; flex-direction: column-reverse; align-items: center; }
+  .b {
+    width: var(--bw, 62px); height: var(--bh, 16px); margin-top: var(--ov, -5px); border-radius: 3px 3px 50% 50% / 3px 3px 100% 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,.35), transparent 35%), var(--pig);
+    border: 1px solid rgba(20,12,5,.55); box-shadow: inset 0 -3px 0 rgba(0,0,0,.18);
+  }
+  .plinth {
+    width: 100%; margin-top: 2px; padding: 6px 4px 8px; text-align: center; color: var(--ink);
+    background: linear-gradient(#efe3c4, #cdb98a); border: 1px solid #7d6a3f; border-bottom: 0; font-family: var(--caps); line-height: 1.1;
+  }
+  .plinth b { display: block; font-family: var(--numeral); font-size: 22px; font-variant-numeric: tabular-nums; }
+  .plinth span { display: block; overflow-wrap: anywhere; font-size: 15px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 15px; color: var(--parchment-dim); }
+  .legend i { display: inline-block; width: 12px; height: 12px; background: var(--pig); margin-right: 6px; border: 1px solid rgba(255,255,255,.3); vertical-align: -1px; }
+  @keyframes bob { from { transform: rotate(-4deg) translateY(0); } to { transform: rotate(5deg) translateY(-6px); } }
+  @keyframes fall { from { transform: rotate(168deg); } to { transform: rotate(196deg) translateY(4px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .saint, .saint .halo, .bowl { animation: none !important; transition: none; } .saint.last { transform: rotate(180deg); } }
+
+  /* ---------- my stats ---------- */
+  .mine { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .mine { grid-template-columns: 1fr; } }
+  .portrait { display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; }
+  .portrait .face { width: 180px; height: 180px; border-radius: 4px; border: 9px solid #7a5719; border-image: linear-gradient(135deg, #f3d77a, #8a6420 40%, #e7c35b 60%, #6e4d15) 1; box-shadow: 0 10px 24px rgba(0,0,0,.55); }
+  .portrait .nm { font-family: var(--numeral); font-size: 21px; color: var(--gold-hi); overflow-wrap: anywhere; line-height: 1.15; }
+  .portrait .ttl { font-family: var(--caps); letter-spacing: .05em; }
+  .portrait .motto { font-style: italic; color: var(--parchment-dim); }
+  .linkbtn { background: none; border: 0; padding: 0; color: var(--gold); text-decoration: underline; cursor: pointer; font-style: italic; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); }
+  @media (max-width: 560px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  .tile { padding: 12px 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; }
+  .tile dt { font-family: var(--caps); font-weight: 600; font-size: 15px; letter-spacing: .08em; color: var(--parchment-dim); }
+  .tile dd { margin: 2px 0 0; font-family: var(--numeral); font-size: 26px; color: var(--gold-hi); font-variant-numeric: tabular-nums; line-height: 1.1; overflow-wrap: anywhere; }
+  .tile dd small { display: block; font-family: var(--body); font-style: italic; font-size: 14px; color: var(--parchment-dim); }
+  dl { margin: 0; }
+  .bars { display: grid; grid-template-columns: max-content 1fr max-content; gap: 7px 12px; align-items: center; margin-top: 16px; }
+  .bars .lab { font-family: var(--caps); }
+  .bars .track { height: 16px; background: rgba(234,217,176,.08); }
+  .bars .fill { height: 100%; background: var(--pig); min-width: 2px; border-radius: 0 8px 8px 0; }
+  .bars .n { font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* ---------- comparison ---------- */
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--line); }
+  thead th { font-family: var(--caps); font-weight: 700; vertical-align: bottom; min-width: 78px; }
+  thead th .face { margin: 0 auto 4px; width: 40px; height: 40px; }
+  tbody th { text-align: left; font-family: var(--caps); font-weight: 700; white-space: nowrap; }
+  tbody th i { display: inline-block; width: 10px; height: 10px; background: var(--pig); margin-right: 8px; }
+  td.cell { background: color-mix(in srgb, var(--pig) calc(var(--heat) * 85%), transparent); }
+  td.lead { color: var(--gold-hi); font-weight: bold; box-shadow: inset 0 0 0 2px var(--gold); }
+  tfoot td, tfoot th { font-family: var(--numeral); color: var(--gold-hi); border-bottom: 0; text-align: center; }
+  tfoot th { text-align: left; font-family: var(--caps); }
+
+  /* ---------- chronicle ---------- */
+  .chron { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .chron li { display: flex; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid rgba(210,166,60,.18); }
+  .chron .txt { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .chron time { color: var(--parchment-dim); font-style: italic; white-space: nowrap; }
+  .chron .face { width: 28px; height: 28px; border-width: 1px; }
+  .x { background: none; border: 1px solid var(--line); border-radius: 50%; width: 26px; height: 26px; line-height: 1; cursor: pointer; color: var(--parchment-dim); flex: none; }
+  .x:hover { color: #fff; border-color: var(--vermilion); background: var(--vermilion); }
+
+  /* ---------- dialog + toast ---------- */
+  dialog { background: var(--parchment); color: var(--ink); border: 8px solid #7a5719; padding: 22px; width: min(460px, calc(100vw - 32px)); }
+  dialog::backdrop { background: rgba(10,6,2,.75); }
+  dialog h3 { font-family: var(--numeral); margin: 0 0 12px; font-size: 22px; }
+  dialog label { display: block; font-family: var(--caps); margin: 12px 0 4px; }
+  dialog input[type="text"] { width: 100%; background: #fbf3dc; color: var(--ink); border-color: #8a7444; color-scheme: light; }
+  .pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .pick button { padding: 0; border: 3px solid transparent; background: none; cursor: pointer; aspect-ratio: 1; }
+  .pick button[aria-pressed="true"] { border-color: var(--vermilion); }
+  .pick .face { width: 100%; height: 100%; border-radius: 0; border: 0; }
+  .row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+  .btn { padding: 8px 16px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; font-family: var(--caps); letter-spacing: .05em; }
+  .btn.go { background: var(--ink); color: var(--parchment); }
+  .err { color: var(--vermilion); font-style: italic; min-height: 1.4em; margin: 8px 0 0; }
+  #toast {
+    position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 10;
+    background: var(--parchment); color: var(--ink); padding: 10px 16px; border: 2px solid var(--gold); display: flex; gap: 14px; align-items: center;
+    max-width: calc(100vw - 32px); box-shadow: 0 10px 30px rgba(0,0,0,.6);
+  }
+  #toast button { background: none; border: 0; text-decoration: underline; cursor: pointer; color: var(--vermilion); font-family: var(--caps); }
+  footer { text-align: center; font-style: italic; color: var(--parchment-dim); font-size: 16px; } footer a { color: var(--gold); }
+
+  /* ---------- uploaded portraits: varnished to match ---------- */
+  .face.photo { background-size: cover !important; background-position: center !important; filter: sepia(.42) contrast(1.08) saturate(.78) brightness(.96); }
+  .face.photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.12' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .08  0 0 0 -8 4'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>"); }
+  .face { position: relative; overflow: hidden; }
+  .upload { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; font-style: italic; }
+  .upload input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+  .upload label { display: inline-block; margin: 0; padding: 6px 12px; border: 1px dashed var(--ink); cursor: pointer; font-family: var(--caps); font-style: normal; }
+  .upload label:hover, .upload input:focus-visible + label { background: rgba(42,26,12,.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="plaque">
+      <h1>Sistine Slop Bowls</h1>
+      <p>A devotional ledger of every fast-casual bowl we have consumed, circa 1503. Oil on panel, generated, fingers approximate.</p>
+    </div>
+  </header>
+
+  <div id="status" class="banner" hidden></div>
+
+  <section aria-labelledby="h-who">
+    <h2 id="h-who">Who Art Thou <small>pick your portrait, or commission a new one</small></h2>
+    <div class="whoami" id="whoami"></div>
+  </section>
+
+  <section aria-labelledby="h-log">
+    <h2 id="h-log">Record an Offering <small>one tap, one bowl</small></h2>
+    <div class="logbar">
+      <label for="when">Consumed on</label>
+      <input type="date" id="when">
+      <p class="note" id="loghint"></p>
+    </div>
+    <div class="bowls" id="bowls"></div>
+  </section>
+
+  <section aria-labelledby="h-fresco">
+    <h2 id="h-fresco">The Ascension of the Devout <small>fresco, badly restored; one bowl per bowl</small></h2>
+    <div class="fresco-frame"><div class="fresco"><div class="pillars" id="pillars"></div></div></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section aria-labelledby="h-mine">
+    <h2 id="h-mine">Thy Devotions</h2>
+    <div class="mine" id="mine"></div>
+  </section>
+
+  <section aria-labelledby="h-cmp">
+    <h2 id="h-cmp">The Reckoning <small>gilded cell = patron saint of that bowl</small></h2>
+    <div class="scroll"><table id="matrix"></table></div>
+  </section>
+
+  <section aria-labelledby="h-chron">
+    <h2 id="h-chron">Chronicle <small>the latest offerings</small></h2>
+    <ul class="chron" id="chron"></ul>
+  </section>
+
+  <div class="rule"></div>
+  <footer>Signed, Leonrado da Vinici &amp; workshop. Any resemblance to hands with five fingers is coincidental. <a href="https://github.com/OWNER/sistine-slop-bowls">Source</a>.</footer>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" id="pform">
+    <h3 id="dlg-title">Commission a Portrait</h3>
+    <label for="pname">Name</label>
+    <input type="text" id="pname" maxlength="40" autocomplete="off" placeholder="e.g. Lorenzo de' Bowlici">
+    <label for="pmotto">Motto (optional)</label>
+    <input type="text" id="pmotto" maxlength="80" autocomplete="off" placeholder="e.g. Guac is extra, and so am I">
+    <label>Likeness</label>
+    <div class="pick" id="pick"></div>
+    <div class="upload">
+      <input type="file" id="pfile" accept="image/*">
+      <label for="pfile">Hang your own face</label>
+      <span>any photo; it will be varnished to match</span>
+    </div>
+    <p class="err" id="perr"></p>
+    <div class="row">
+      <button type="button" class="btn" id="pcancel">Cancel</button>
+      <button type="submit" class="btn go" id="psave">Save portrait</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" hidden><span id="toast-msg"></span><button type="button" id="toast-undo" hidden>Undo</button></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
